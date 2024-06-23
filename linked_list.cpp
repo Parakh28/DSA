@@ -51,7 +51,16 @@ void insertatpos(Node* &head,int val,int pos){
     temp->next=new_node;
 }
 
+void updateatpos(Node* &head,int val,int pos){
+    Node* temp=head;
+    int curr=0;
 
+    while(curr!=pos){
+        temp=temp->next;
+        curr++;
+    }
+    temp->val=val;
+}
 
 int main() {
     Node* head = NULL;
@@ -64,5 +73,8 @@ int main() {
 
     insertatpos(head,4,3);
         display(head);
+
+    updateatpos(head,4,2);
+    display(head);
     return 0;
 }
