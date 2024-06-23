@@ -11,23 +11,6 @@ public:
         next = NULL;
     }
 };
-
-void insertathead(Node*& head, int val) {
-    Node* new_node = new Node(val);
-    new_node->next = head;
-    head = new_node;
-}
-
-void insertatend(Node*& head, int val) {
-    Node* new_node = new Node(val);
-    Node* temp=head;
-    while(temp->next !=NULL){
-        temp=temp->next;
-    }
-    temp->next=new_node;
-     
-}
-
 void display(Node* head) {
     Node* temp = head;
 
@@ -37,6 +20,38 @@ void display(Node* head) {
     }
     cout << "NULL" << endl;
 }
+void insertathead(Node* &head, int val) {
+    Node* new_node = new Node(val);
+    new_node->next = head;
+    head = new_node;
+}
+
+void insertatend(Node*& head, int val) {
+
+    Node* new_node = new Node(val);
+    Node* temp=head;
+    while(temp->next !=NULL){
+        temp=temp->next;
+    }
+    temp->next=new_node;
+     
+}
+
+
+void insertatpos(Node* &head,int val,int pos){
+
+    Node* new_node= new Node(val);
+    Node* temp=head;
+    int current_pos=0;
+    while(current_pos!=pos-1){
+        temp=temp->next;
+        current_pos++;
+    }
+    new_node->next=temp->next;
+    temp->next=new_node;
+}
+
+
 
 int main() {
     Node* head = NULL;
@@ -46,5 +61,8 @@ int main() {
     display(head);
     insertatend(head,3);
     display(head);
+
+    insertatpos(head,4,3);
+        display(head);
     return 0;
 }
