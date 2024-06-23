@@ -62,6 +62,12 @@ void updateatpos(Node* &head,int val,int pos){
     temp->val=val;
 }
 
+void deleteathead(Node* &head){
+    Node* temp=head;
+    head=head->next;
+    free(temp);
+}
+
 int main() {
     Node* head = NULL;
     insertathead(head, 2);
@@ -75,6 +81,9 @@ int main() {
         display(head);
 
     updateatpos(head,4,2);
+    display(head);
+
+    deleteathead(head);
     display(head);
     return 0;
 }
