@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 
@@ -104,18 +104,45 @@ Node* reverse(Node* &head){
 }
 
 
-int main(){
-    Linklist ll;
-
-
-    ll.insertattail(1);
-    ll.insertattail(2);
-    ll.insertattail(2);
-    ll.insertattail(3);
-    ll.insertattail(3);
-
-    ll.display();
+Node* reversellrecursive(Node* &head){
     
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    
+    Node* new_head = reversellrecursive(head->next);
+    head->next->next=head;
+    head->next=NULL;
+    return new_head;
+}
+
+bool checkequal(Node* head1,Node* head2){
+    
+    Node* ptr1=head1;
+    Node* ptr2=head2;
+    
+    while(ptr1!=NULL and ptr2!=NULL){
+        if(ptr1->val!=ptr2->val){
+            return false;
+        }
+        
+        ptr1=ptr1->next;
+        ptr2=ptr2->next;
+    }
+    return(ptr1==NULL and ptr2==NULL);
+}
+int main(){
+    Linklist ll1;
+    Linklist ll2;
+
+    for(int i= 1;i<=5;i++){
+        ll1.insertattail(i);
+        ll2.insertattail(i);
+    }
+    
+    
+    ll1.display();
+    ll2.display();
     //alternatenode(ll.head);
    // ll.display();
     
@@ -125,9 +152,14 @@ int main(){
     //reverseprint(ll.head);
     //ll.display();
     
-    ll.head=reverse(ll.head);
-    ll.display();
+    // ll.head=reverse(ll.head);
+    //ll.display();
    
+   //ll.head=reversellrecursive(ll.head);
+   //ll.display();
+   
+    cout<<checkequal(ll1.head,ll2.head);
+    
     return 0;
     
 }
