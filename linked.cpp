@@ -131,18 +131,87 @@ bool checkequal(Node* head1,Node* head2){
     }
     return(ptr1==NULL and ptr2==NULL);
 }
+
+int length(Node* head){
+    int len=0;
+    Node* temp=head;
+    while(temp!=NULL){
+        len++;
+        temp=temp->next;
+    }
+    return len;
+    
+}
+
+Node* movetillk(Node* head,int k){
+    Node* temp=head;
+    
+    while(k--){
+        temp=temp->next;
+    }
+    return temp;
+}
+
+
+Node* getintersection(Node* head1,Node* head2){
+    
+    int l1=length(head1);
+    int l2=length(head2);
+    
+    Node* ptr1;
+    Node* ptr2;
+    
+    if(l1>l2){
+        int k=l1-l2;
+        ptr1=movetillk(head1,k);
+        ptr2=head2;
+    }
+    else{
+        int k=l2-l1;
+        ptr1=head1;
+        ptr2=movetillk(head2,k);
+    }
+    
+    
+    while(ptr1){
+        if(ptr1==ptr2){
+            return ptr1;
+        }
+        ptr1=ptr1->next;
+        ptr2=ptr2->next;
+    }
+    return NULL;
+    
+}
 int main(){
     Linklist ll1;
     Linklist ll2;
 
-    for(int i= 1;i<=5;i++){
-        ll1.insertattail(i);
-        ll2.insertattail(i);
-    }
     
+        ll1.insertattail(1);
+        ll1.insertattail(2);
+        ll1.insertattail(3);
+        ll1.insertattail(4);
+        ll1.insertattail(5);
+        
+        ll1.display();
+        
+        ll2.insertattail(6);
+        ll2.insertattail(7);
+        ll2.head->next->next=ll1.head->next->next->next;
     
-    ll1.display();
-    ll2.display();
+        ll2.display();
+    
+        Node* interaction = getintersection(ll1.head,ll2.head);
+        if(interaction){
+            cout<<interaction->val<<endl;
+        }
+        else{
+            cout<<"-1"<<endl;
+        }
+    
+    //ll1.display();
+    //ll2.display();
     //alternatenode(ll.head);
    // ll.display();
     
@@ -158,7 +227,7 @@ int main(){
    //ll.head=reversellrecursive(ll.head);
    //ll.display();
    
-    cout<<checkequal(ll1.head,ll2.head);
+    //cout<<checkequal(ll1.head,ll2.head);
     
     return 0;
     
