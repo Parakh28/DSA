@@ -285,6 +285,38 @@ bool detectcycle(Node* head){
     return false;
 }
 
+
+void removecycle(Node* &head) {
+    Node* slow = head;
+    Node* fast = head;
+
+    // First, find the intersection point if there's a cycle
+    do {
+        slow = slow->next;
+        fast = fast->next->next;
+    } while (slow != fast);
+
+    // Set fast to head
+    fast = head;
+
+    // If the cycle starts at the head
+    if (slow == head) {
+        while (fast->next != head) {
+            fast = fast->next;
+        }
+        fast->next = nullptr;
+        return;
+    }
+
+    // Move both pointers at the same speed
+    while (slow->next != fast->next) {
+        slow = slow->next;
+        fast = fast->next;
+    }
+
+    // Break the cycle
+    slow->next = nullptr;
+}
 int main(){
     
     Linklist ll1;
@@ -297,7 +329,15 @@ int main(){
     ll1.display();
     ll1.head->next->next->next->next=ll1.head->next->next;
     
-    cout<<detectcycle(ll1.head)<<" ";
+    cout<<detectcycle(ll1.head)<<endl;
+    
+    cout<<"after removal"<<endl;
+    removecycle(ll1.head);
+    cout<<detectcycle(ll1.head)<<endl;
+    ll1.display();
+    
+    
+    
     /*
     Node* a = printmid(ll1.head);
     cout<<a->val;
