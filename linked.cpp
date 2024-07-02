@@ -240,8 +240,63 @@ Node* mergelinklist(Node* head1,Node* head2){
     
     return dummayhead->next;
 }
+
+Node* mergeklinklist(vector <Node*> &lists){
+    if(lists.size()==0){
+        return NULL;
+    }
+    while(lists.size()>1){
+        Node* mergehead = mergelinklist(lists[0],lists[1]);
+        lists.push_back(mergehead);
+        lists.erase(lists.begin());
+        lists.erase(lists.begin());
+    }
+    return lists[0];
+}
+
+
 int main(){
     
+    Linklist ll1;
+    ll1.insertattail(1);
+    ll1.insertattail(4);
+    ll1.insertattail(7);
+    ll1.insertattail(10);
+    ll1.display();
+    
+    Linklist ll2;
+    ll2.insertattail(2);
+    ll2.insertattail(5);
+    ll2.insertattail(8);
+    ll2.display();
+    
+    Linklist ll3;
+    ll3.insertattail(3);
+    ll3.insertattail(6);
+    ll3.insertattail(9);
+    ll3.display();
+    
+    
+    vector<Node*> lists;
+    lists.push_back(ll1.head);
+    lists.push_back(ll2.head);
+    lists.push_back(ll3.head);
+    
+    Linklist mergedll;
+    mergedll.head=mergeklinklist(lists);
+    mergedll.display();
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     Linklist ll1;
     Linklist ll2;
     Linklist ll3;
@@ -257,7 +312,7 @@ int main(){
         ll2.display();
         ll3.head=mergelinklist(ll1.head,ll2.head);
         ll3.display();
-        
+        */
         
         //ll1.display();
         //deletefromposend(ll1.head,5);
