@@ -254,15 +254,195 @@ Node* mergeklinklist(vector <Node*> &lists){
     return lists[0];
 }
 
+Node* printmid(Node* head){
+    Node* slow=head;
+    Node* fast=head;
+    
+    while(fast!=NULL and fast->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    return slow;
+}
+
+bool detectcycle(Node* head){
+    Node* slow=head;
+    Node* fast=head;
+    
+    if(!head){
+        return false;
+    }
+    
+    while(fast and fast->next){
+        slow=slow->next;
+        fast=fast->next->next;
+        
+        if(slow==fast){
+            cout<<slow->val<<endl;
+            return true;
+        }
+    }
+    return false;
+}
+
+
+void removecycle(Node* &head){
+    Node* slow=head;
+    Node* fast=head;
+    
+    do{
+        slow=slow->next;
+        fast=fast->next->next;
+    }while(slow!=fast);
+    fast=head;
+    while(slow->next!=fast->next){
+        slow=slow->next;
+        fast=fast->next;
+    }
+    slow->next=NULL;
+    
+}
+
+bool palindrome(Node* &head){
+    Node* slow=head;
+    Node* fast=head;
+    
+    while(fast and fast->next){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    
+    Node* curr=slow->next;
+    Node* prev=slow;
+    slow->next=NULL;
+    
+    while(curr){
+        Node* next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+    
+    Node* head1=head;
+    Node* head2=prev;
+    while(head2){
+        if(head1->val!=head2->val){
+            return false;
+        }
+        head1=head1->next;
+        head2=head2->next;
+    }
+    return true;
+    
+    
+}
+
+Node* rotatebyk(Node* & head,int k){
+    int n=0;
+    Node* temp=head;
+    while(temp->next!=NULL){
+        n++;
+        temp=temp->next;
+    }
+    n++;
+    
+    k=k%n;
+    if(k==0){
+        return head;
+    }
+
+    temp->next=head;
+    Node* temp2=head;
+    
+    
+    for(int i=0;i<n-k-1;i++){
+       temp2=temp2->next;
+    }
+    Node* new_head=temp2->next;
+    temp2->next=NULL;
+    return new_head;
+    
+}
+
+Node* oddeven(Node* &head){
+    
+    if(!head){
+        return head;
+    }
+    
+    Node* evenhead=head->next;
+    Node* oddptr=head;
+    Node* evenptr=evenhead;
+    
+    while(evenptr and evenptr->next){
+        oddptr->next=oddptr->next->next;
+        evenptr->next=evenptr->next->next;
+        evenptr=evenptr->next;
+        oddptr=oddptr->next;
+    }
+    oddptr->next=evenhead;
+    return head;
+}
+
 
 int main(){
     
+    Linklist ll;
+    ll.insertattail(1);
+    ll.insertattail(2);
+    ll.insertattail(3);
+    ll.insertattail(4);
+    ll.insertattail(5);
+    ll.insertattail(6);
+    ll.display();
+    ll.head=oddeven(ll.head);
+    ll.display();
+    
+    
+    
+    
+    
+    //cout<<palindrome(ll.head)<<endl;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     Linklist ll1;
     ll1.insertattail(1);
+    ll1.insertattail(2);
+    ll1.insertattail(3);
     ll1.insertattail(4);
+    ll1.insertattail(5);
+    ll1.insertattail(6);
     ll1.insertattail(7);
-    ll1.insertattail(10);
+    ll1.insertattail(8);
     ll1.display();
+    ll1.head->next->next->next->next->next->next->next->next=ll1.head->next->next;
+    
+    cout<<detectcycle(ll1.head)<<endl;
+    
+    cout<<"after removal"<<endl;
+    removecycle(ll1.head);
+    cout<<detectcycle(ll1.head)<<endl;
+    ll1.display();
+    
+    */
+    
+    /*
+    Node* a = printmid(ll1.head);
+    cout<<a->val;
+    
     
     Linklist ll2;
     ll2.insertattail(2);
@@ -284,16 +464,7 @@ int main(){
     
     Linklist mergedll;
     mergedll.head=mergeklinklist(lists);
-    mergedll.display();
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    mergedll.display();*/
     
     
     /*
