@@ -302,8 +302,68 @@ void removecycle(Node* &head){
     slow->next=NULL;
     
 }
+
+
+
+bool palindrome(Node* &head){
+    Node* slow=head;
+    Node* fast=head;
+    
+    while(fast and fast->next){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    
+    Node* curr=slow->next;
+    Node* prev=slow;
+    slow->next=NULL;
+    
+    while(curr){
+        Node* next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+    
+    Node* head1=head;
+    Node* head2=prev;
+    while(head2){
+        if(head1->val!=head2->val){
+            return false;
+        }
+        head1=head1->next;
+        head2=head2->next;
+    }
+    return true;
+    
+    
+}
 int main(){
     
+    Linklist ll;
+    ll.insertattail(1);
+    ll.insertattail(2);
+    ll.insertattail(3);
+    ll.insertattail(3);
+    ll.insertattail(2);
+    ll.insertattail(1);
+    ll.display();
+    cout<<palindrome(ll.head)<<endl;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     Linklist ll1;
     ll1.insertattail(1);
     ll1.insertattail(2);
@@ -323,7 +383,7 @@ int main(){
     cout<<detectcycle(ll1.head)<<endl;
     ll1.display();
     
-    
+    */
     
     /*
     Node* a = printmid(ll1.head);
