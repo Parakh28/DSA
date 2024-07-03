@@ -303,8 +303,6 @@ void removecycle(Node* &head){
     
 }
 
-
-
 bool palindrome(Node* &head){
     Node* slow=head;
     Node* fast=head;
@@ -338,17 +336,53 @@ bool palindrome(Node* &head){
     
     
 }
+
+Node* rotatebyk(Node* & head,int k){
+    int n=0;
+    Node* temp=head;
+    while(temp->next!=NULL){
+        n++;
+        temp=temp->next;
+    }
+    n++;
+    
+    k=k%n;
+    if(k==0){
+        return head;
+    }
+
+    temp->next=head;
+    Node* temp2=head;
+    
+    
+    for(int i=0;i<n-k-1;i++){
+       temp2=temp2->next;
+    }
+    Node* new_head=temp2->next;
+    temp2->next=NULL;
+    return new_head;
+    
+}
+
+
 int main(){
     
     Linklist ll;
     ll.insertattail(1);
     ll.insertattail(2);
     ll.insertattail(3);
-    ll.insertattail(3);
-    ll.insertattail(2);
-    ll.insertattail(1);
+    ll.insertattail(4);
+    ll.insertattail(5);
+    ll.insertattail(6);
     ll.display();
-    cout<<palindrome(ll.head)<<endl;
+    ll.head=rotatebyk(ll.head,3);
+    ll.display();
+    
+    
+    
+    
+    
+    //cout<<palindrome(ll.head)<<endl;
     
     
     
