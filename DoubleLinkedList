@@ -183,22 +183,68 @@ void deleteneighbor(Node* &head,Node* &tail){
     }
 }
 
+bool criticanode(Node* curr){
+    if(curr->val<curr->next->val and curr->val<curr->prev->val){
+        return true;
+    }
+    if(curr->val>curr->next->val and curr->val>curr->prev->val){
+        return true;
+    }
+    return false;
+}
+
+vector<int> distancebetweencp(Node* &head,Node* &tail){
+    vector<int> ans(2,INT_MAX);
+    
+    int firstcp=-1 , lastcp=-1;
+    
+    Node* curr=tail->prev;
+    if(curr==nullptr){
+        ans[0]=ans[1]=-1;
+        return ans;
+    }
+    int currpos=0;
+    while(curr!=head){
+        if(criticanode(curr)){
+            if(firstcp==-1){
+                firstcp=lastcp=currpos;
+            }
+            else{
+                ans[0]=min(ans[0],firstcp-lastcp);
+                ans[1]=currpos-firstcp;
+                lastcp=currpos;
+            }
+            currpos++;
+            curr=curr->prev;
+        }
+        
+    }
+    if(ans[0]==INT_MAX){
+            ans[0]=ans[1]=-1;
+        }
+    return ans;
+    
+}
+
+
 int main(){
     DoubleLinkedList ll;
     
     ll.insertatend(1);
+    ll.insertatend(5);
     ll.insertatend(2);
-    ll.insertatend(1);
-    ll.insertatend(2);
-    ll.insertatend(1);
+    ll.insertatend(6);
+    ll.insertatend(3);
     ll.display();
     //ll.insertatk(5,4);
      
     //ll.deleteatk(3);
     //revesell(ll.head,ll.tail);
     //cout<<palindromell(ll.head,ll.tail)<<" ";
-    deleteneighbor(ll.head,ll.tail);
-    ll.display();
+    //deleteneighbor(ll.head,ll.tail);
+    vector<int> ans=distancebetweencp(ll.head,ll.tail);
+    cout<<ans[0]<<" "<<ans[1]<<endl;
+    
     
     
     return 0;
