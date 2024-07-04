@@ -385,6 +385,42 @@ Node* oddeven(Node* &head){
 }
 
 
+
+Node* alternate(Node* &head){
+    
+    Node* slow=head;
+    Node* fast=head;
+    
+    while(fast and fast->next){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    
+    Node* curr=slow->next;
+    slow->next=NULL;
+    Node* prev=slow;
+    
+    while(curr){
+        Node* next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+    
+    Node* ptr1=head;
+    Node* ptr2=prev;
+    
+    while(ptr1!=ptr2){
+        Node* temp=ptr1->next;
+        ptr1->next=ptr2;
+        ptr1=ptr2;
+        ptr2=temp;
+    }
+    
+    return head;
+}
+
+
 int main(){
     
     Linklist ll;
@@ -394,6 +430,7 @@ int main(){
     ll.insertattail(4);
     ll.insertattail(5);
     ll.insertattail(6);
+    ll.insertattail(7);
     ll.display();
     ll.head=oddeven(ll.head);
     ll.display();
