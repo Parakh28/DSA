@@ -24,8 +24,120 @@ bool isvalid(string str){
     
 }
 
-int main(){
-    string str = "()";
-    std::cout << isvalid(str) << std::endl;
+
+vector<int> nge(vector<int> &arr) {
+    int n = arr.size();
+    vector<int> output(n, -1);
+    stack<int> st;
+    st.push(0);
+    
+    for (int i = 1; i < n; i++) {  // Start from the second element
+        while (!st.empty() && arr[i] > arr[st.top()]) {
+            output[st.top()] = arr[i];
+            st.pop();  // Pop the top element from the stack
+        }
+        st.push(i);
+    }
+    
+    return output;
+}
+
+vector<int> pge(vector<int> &arr) {
+    int n = arr.size();
+    vector<int> output(n, -1);
+    stack<int> st;
+    reverse(arr.begin(),arr.end());
+    st.push(0);
+    
+    for (int i = 1; i < n; i++) {  // Start from the second element
+        while (!st.empty() && arr[i] > arr[st.top()]) {
+            output[st.top()] = arr[i];
+            st.pop();  // Pop the top element from the stack
+        }
+        st.push(i);
+    }
+    reverse(arr.begin(),arr.end());
+    reverse(output.begin(),output.end());
+    return output;
+}
+
+int calc(int val1,int val2,char op){
+    if(op=='^'){
+        return pow(val1,val2);
+    }
+    else if(op=='*'){
+        return val1*val2;
+    }
+    else if(op=='/'){
+        return val1/val2;
+    }
+    else if(op=='+'){
+        return val1+val2;
+    }
+    else if(op=='-'){
+        return val1-val2;
+    }
+
+    return val1%val2;
+    
+
+}
+
+int prefix (string &str){
+    
+    stack<int> st;
+    for(int i=str.size()-1;i>=0;i--){
+        char c=str[i];
+        if(isdigit(c)){
+            st.push(c-'0');
+        }
+        else{
+            int v2=st.top();
+            st.pop();
+            int v1=st.top();
+            st.pop();
+            st.push(calc(v1,v2,c));
+        }
+    }
+    return st.top();
+}
+
+int posfix(string &str){
+    
+    stack<int> st;
+    for(int i=0;i<str.size();i++){
+        char c=str[i];
+        if(isdigit(c)){
+            st.push(c-'0');
+        }
+        else{
+            int v2=st.top();
+            st.pop();
+            int v1=st.top();
+            st.pop();
+            st.push(calc(v1,v2,c));
+        }
+    }
+    return st.top();
+}
+int main() {
+    /*vector<int> a = {5,4,3,2,1};
+    vector<int> b = pge(a);
+    int n = b.size();  
+    for (int i = 0; i < n; i++) {
+        cout << b[i] << " "; 
+    }
+    //string str = "()";
+    //std::cout << isvalid(str) << std::endl;*/
+    
+    //string str="231*+9-";
+    //cout<<posfix(str);
+    
+    string str="-9+*132";
+    cout<<prefix(str);
+    
+    
     return 0;
 }
+
+
